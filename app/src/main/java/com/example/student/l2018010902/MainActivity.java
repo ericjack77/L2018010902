@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,9 +57,20 @@ public class MainActivity extends AppCompatActivity {
         {
             builder =new Notification.Builder(MainActivity.this);
         }
+
+        Intent it =new Intent(MainActivity.this,infoActivity.class);
+        it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP |
+        Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent pi=PendingIntent.getActivity(MainActivity.this,123,it,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
         builder.setContentTitle("測試");
         builder.setContentText("Content");
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+        builder.setContentIntent(pi);
+
+
         Notification notify = builder.build();
         nm.notify(1,notify);
     }
